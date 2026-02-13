@@ -1,9 +1,5 @@
 import { FC } from "react";
-
-interface Props {
-  size?: number;
-  fullScreen?: boolean;
-}
+import {Props} from "../types/loader"
 
 export const Loader: FC<Props> = ({
   size = 24,

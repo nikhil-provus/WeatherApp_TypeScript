@@ -1,17 +1,7 @@
-import { ForecastDay } from "../types/weatherTypes";
+import { ForecastDay,ForecastProps,ForecastCardProps } from "../types/weatherTypes";
 import { TempUnit } from "../types/temperature";
 import { convertTemp } from "../utils/temperature";
 
-interface ForecastProps {
-  forecast: ForecastDay[];
-  tempUnit: TempUnit;
-}
-
-interface ForecastCardProps {
-  day: ForecastDay;
-  index: number;
-  tempUnit: TempUnit;
-}
 
 const ForecastCard = ({ day, index ,tempUnit}: ForecastCardProps) => {
   const getDayLabel = (dateString: string, idx: number) => {

@@ -1,14 +1,26 @@
+import { TempUnit } from "../types/temperature";
+import { convertTemp } from "../utils/temperature";
 
+export interface ForecastProps {
+  forecast: ForecastDay[];
+  tempUnit: TempUnit;
+}
+
+export interface ForecastCardProps {
+  day: ForecastDay;
+  index: number;
+  tempUnit: TempUnit;
+}
 export interface WeatherResponse {
   city: string;
   temperature: number;
   description: string;
   humidity: number;
   windSpeed: number;
-  icon:string;
-  uv:number;
-  feelslike:number;
-  last_updated:string;
+  icon: string;
+  uv: number;
+  feelslike: number;
+  last_updated: string;
 }
 
 
@@ -19,19 +31,19 @@ export interface LocationSuggestion {
 }
 
 export interface WeatherApiResponse {
-  data: WeatherResponse;  
+  data: WeatherResponse;
   source: string;
 }
 export interface CitySuggestion {
-    data: {
-        id: string;
-        name: string;
-        region: string;
-        country: string;
-        lat: number;
-        lon: number;
-        label: string; 
-    }
+  data: {
+    id: string;
+    name: string;
+    region: string;
+    country: string;
+    lat: number;
+    lon: number;
+    label: string;
+  }
 
 }
 
@@ -41,7 +53,7 @@ export interface ForecastDay {
   minTemp: number;
   avgTemp: number;
   condition: string;
-  icon: string; 
+  icon: string;
 }
 
 export interface HrForecast {
@@ -50,3 +62,8 @@ export interface HrForecast {
   condition: string;
   icon?: string;
 }
+
+export interface WeatherEffectsProps {
+  condition: string;
+}
+

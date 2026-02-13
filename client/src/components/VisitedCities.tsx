@@ -1,13 +1,6 @@
 import { FC } from "react";
-import { WeatherResponse } from "../types/weatherTypes";
-import { TempUnit } from "../types/temperature";
+import { Props } from "../types/visitedCity"
 
-interface Props {
-    cities: WeatherResponse[];
-    tempUnit: TempUnit;
-    onSelect: (city: WeatherResponse) => void;
-    city:string
-}
 
 export const VisitedCities: FC<Props> = ({ cities, tempUnit, onSelect }) => {
     if (cities.length === 0) return null;
@@ -15,7 +8,7 @@ export const VisitedCities: FC<Props> = ({ cities, tempUnit, onSelect }) => {
     return (
         <div className="flex flex-wrap items-center gap-3 mb-4">
             <span className="text-gray-500 font-medium mr-2 whitespace-nowrap">
-                
+
             </span>
             {cities.map((city) => (
                 <button

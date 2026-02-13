@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-import { WeatherCard } from "../components/weatherCard";
-import { SearchBar } from "../components/searchBar";
+import { WeatherCard } from "../components/WeatherCard";
+import { SearchBar } from "../components/SearchBar";
 import { VisitedCities } from "../components/VisitedCities";
 import {
     WeatherResponse,
@@ -12,8 +12,8 @@ import {
     HrForecast,
 } from "../types/weatherTypes";
 import { CitySuggestion, CitySuggestionResponse } from "../types/locationTypes";
-import { Forecast } from "../components/forecast";
-import { HourlyForecast } from "../components/hourlyForecast";
+import { Forecast } from "../components/Forecast";
+import { HourlyForecast } from "../components/HourlyForecast";
 import { Card, CardHeader, CardTitle, CardContent } from "../components/Card";
 import { getWeatherBackground, isNightTime } from "../utils/weatherBackgrounds";
 import { WeatherEffects } from "../components/WeatherEffects";
@@ -36,7 +36,7 @@ export const Home = () => {
     const [serverDown, setServerDown] = useState(false);
 
     const [tempUnit, setTempUnit] = useState<TempUnit>(TempUnit.Celsius);
-    const[city,setCity]=useState<string>('')
+    const [city, setCity] = useState<string>('')
 
     const toggleUnit = () => {
         setTempUnit((prev) =>
@@ -66,13 +66,18 @@ export const Home = () => {
                 const newList = [data, ...prev.filter((c) => c.city !== data.city)];
                 return newList.slice(0, 5); // keep only last 5
             });
-        } catch (error: any) {
-            if (!error.response) {
-                setServerDown(true);
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                if (!error.response) {
+                    setServerDown(true);
+                }
+                if (error.response) toast.error(error.response.data?.message || "City not found");
+                else if (error.request) toast.error("Server not responding");
             }
-            if (error.response) toast.error(error.response.data?.message || "City not found");
-            else if (error.request) toast.error("Server not responding");
-            else toast.error("Something went wrong");
+            else{
+                toast.error("Something went wrong");
+            }
+            
         } finally {
             setLoading(false);
         }
@@ -233,7 +238,7 @@ export const Home = () => {
                     </div>
                 )}
 
-                {/* 3-Day Forecast */}
+                {/* 5-Day Forecast */}
                 {forecast.length > 0 && (
                     <Card className="mb-6">
                         <CardHeader>

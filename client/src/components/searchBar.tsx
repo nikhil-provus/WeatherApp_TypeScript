@@ -1,13 +1,6 @@
 import { FC, useState, ChangeEvent, KeyboardEvent } from "react";
 import { CitySuggestion } from "../types/locationTypes";
-
-interface Props {
-  suggestions: CitySuggestion[];
-  onSelect: (location: CitySuggestion) => void;
-  onChange: (query: string) => void;
-  onSubmit: (query: string) => void;
-  disabled?: boolean;
-}
+import { Props } from "../types/searchBar_Types";
 
 export const SearchBar: FC<Props> = ({
   suggestions,
@@ -27,14 +20,14 @@ export const SearchBar: FC<Props> = ({
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && query.trim()) {
       onSubmit(query.trim());
-      setQuery("");     
+      setQuery("");
     }
   };
 
   const handleSelect = (suggestion: CitySuggestion) => {
     setQuery(suggestion.name);
     onSelect(suggestion);
-    setQuery("");  
+    setQuery("");
   };
 
   return (
@@ -49,7 +42,7 @@ export const SearchBar: FC<Props> = ({
           type="text"
           value={query}
           onChange={handleChange}
-          onKeyDown={handleKeyDown}   // 👈 important
+          onKeyDown={handleKeyDown}
           placeholder="Search for a city and press Enter"
           disabled={disabled}
           className="w-full pl-11 pr-4 py-3 rounded-full bg-white shadow-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition disabled:opacity-50"

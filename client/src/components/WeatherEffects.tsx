@@ -1,19 +1,15 @@
-// Optional: WeatherEffects.tsx
-// Animated effects for rain, snow, etc.
-// Install: npm install framer-motion (if you want to use this component)
+
 
 import { useEffect, useState } from 'react';
+import { WeatherEffectsProps } from '../types/weatherTypes';
 
-interface WeatherEffectsProps {
-  condition: string;
-}
 
 export const WeatherEffects = ({ condition }: WeatherEffectsProps) => {
   const [particles, setParticles] = useState<number[]>([]);
-  
+
   useEffect(() => {
     const desc = condition.toLowerCase();
-    
+
     if (desc.includes('rain') || desc.includes('drizzle')) {
       setParticles(Array.from({ length: 50 }, (_, i) => i));
     } else if (desc.includes('snow')) {
@@ -26,14 +22,14 @@ export const WeatherEffects = ({ condition }: WeatherEffectsProps) => {
   if (particles.length === 0) return null;
 
   const isSnow = condition.toLowerCase().includes('snow');
-  
+
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
       {particles.map((i) => {
         const left = Math.random() * 100;
         const delay = Math.random() * 5;
         const duration = isSnow ? 8 + Math.random() * 4 : 1 + Math.random() * 1;
-        
+
         return (
           <div
             key={i}
@@ -57,6 +53,3 @@ export const WeatherEffects = ({ condition }: WeatherEffectsProps) => {
   );
 };
 
-// Usage in Home.tsx:
-// Import: import { WeatherEffects } from "../components/WeatherEffects";
-// Add before closing div: {weather && <WeatherEffects condition={weather.description} />}

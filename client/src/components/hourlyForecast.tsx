@@ -27,22 +27,28 @@ export const HourlyForecast = ({ hourly,cityTime,tempUnit }: Props) => {
 
   // Find current hour index
   useEffect(() => {
-    const now = new Date();
-    const currTime=cityTime.getHours()-1;
-    const currentHour = (currTime) ?? new Date().getHours();;
-    
+  const updateCurrentHour = () => {
+    const currHr = cityTime.getHours();
+
     const index = hourly.findIndex((hour) => {
       const hourTime = new Date(hour.time).getHours();
-      return hourTime === currentHour;
+      return hourTime === currHr;
     });
-    
+
     setCurrentHourIndex(index >= 0 ? index : 0);
     setActiveIndex(index >= 0 ? index : 0);
-  }, [hourly]);
+  };
+
+  updateCurrentHour(); // run immediately
+
+  const interval = setInterval(updateCurrentHour, 60000); // update every 1 min
+
+  return () => clearInterval(interval);
+}, [hourly, cityTime]);
 
   if (!hourly || hourly.length === 0) return null;
 
-  // Prepare data for chart
+
   const chartData = hourly.slice(0, 24).map((hour, index) => ({
     time: new Date(hour.time).toLocaleTimeString("en-US", {
       hour: "numeric",
@@ -59,12 +65,11 @@ export const HourlyForecast = ({ hourly,cityTime,tempUnit }: Props) => {
   // Custom tooltip
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
-      return null; // We'll show info in the header instead
+      return null; 
     }
     return null;
   };
 
-  // Handle mouse/touch move
   const handleChartHover = (data: any) => {
     if (data && data.activeTooltipIndex !== undefined) {
       setActiveIndex(data.activeTooltipIndex);
