@@ -206,7 +206,7 @@ This is a solid full-stack TypeScript project with good architecture and modern 
 
 ---
 
-## 🎯 Overall Score: **7/10**
+## Code Quality Score: **7/10**
 
 ## 📊 DETAILED SCORING BREAKDOWN
 
